@@ -9,4 +9,7 @@ constexpr auto TILE_SIZE = 16;
 constexpr auto WWIDTH = 640;
 constexpr auto WHEIGHT = 480;
 
+constexpr auto CWIDTH = 100;
+constexpr auto CHEIGHT = 100;
+
 #endif

@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include <iostream>
 
-Window::Window(const string &title, int width, int height/*, const string& image_path*/) :_title(title), _width(width), _height(height)/*, _image_path(image_path)*/
+Window::Window(const string& title, int width, int height) :_title(title), _width(width), _height(height)/*, _image_path(image_path)*/
 {
 	isRunning = init();
 }
@@ -40,8 +40,8 @@ bool Window::init()
 	//Exception management
 	catch (int e) {
 		if (e == 3) {
-		cerr << "Failed to create window! - WINDOW.CPP" << SDL_GetError() << endl;
-		return 0;
+			cerr << "Failed to create window! - WINDOW.CPP" << SDL_GetError() << endl;
+			return 0;
 		}
 	}
 

@@ -14,7 +14,7 @@ class Map : public Window
 	SDL_Texture* _tileset = nullptr;
 	SDL_Surface* Surf_Tileset;
 public:
-	Map(const Window &window, const string &image_path);
+	Map(const Window& window, const string& image_path);
 
 	bool OnLoad(const char* File);
 	void OnRender(int MapX, int MapY);

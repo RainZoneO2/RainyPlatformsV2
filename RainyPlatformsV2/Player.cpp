@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <SDL_image.h>
 
-Player::Player(const Window &window, int width, int height, int x, int y, const string &image_path) :Window(window), _width(width), _height(height), _x(x), _y(y) {
+Player::Player(const Window& window, int width, int height, int x, int y, const string& image_path) :Window(window), _width(width), _height(height), _x(x), _y(y) {
 
 	//Auto basically makes the var same type as return type of IMG_LOAD, same as SDL_Surface*
 	SDL_Surface* surface = IMG_Load(image_path.c_str()); // <----- Can use auto surface here
@@ -17,19 +17,21 @@ Player::Player(const Window &window, int width, int height, int x, int y, const 
 	}
 	//Exception handling
 	catch (int e) {
-		if (e == 1) 
+		if (e == 1)
 			cerr << "Failed to create surface! - PLAYER.CPP" << endl;
 		if (e == 2)
 			cerr << "Failed to create texture! - PLAYER.CPP" << endl;
-	}		
+	}
 	SDL_FreeSurface(surface);
+	setRects(clipRect);
 }
 
 void Player::draw()
 {
+
 	player = { _x, _y, _width, _height };
 	if (_player_texture) {
-		SDL_RenderCopy(Window::_renderer, _player_texture, nullptr, &player);
+		SDL_RenderCopy(Window::_renderer, _player_texture, &clipRect[key], &player);
 	}
 	else {
 		SDL_SetRenderDrawColor(Window::_renderer, _r, _g, _b, _a);
@@ -40,16 +42,82 @@ void Player::draw()
 //This Function handles the keyboard states
 void Player::keyboardHandler(timer& time) {
 	if (state[SDL_SCANCODE_LEFT]) {
-		_x -= 1;
-		mapX += 2;
+		if (!walkingR) {
+			walkingL = true;
+			key++;
+			if (key == 31)
+				key = 16;
+			if (_x >= 0) {
+				_x -= 1;
+			}
+			mapX += 2;
+		}
 	}
 	if (state[SDL_SCANCODE_RIGHT]) {
-		_x += 1;
-		mapX -= 2;
+		if (!walkingL) {
+			walkingR = true;
+			key++;
+			if (key == 15 || key > 15)
+				key = 0;
+			if (_x <= 600) {
+				_x += 1;
+			}
+			mapX -= 2;
+		}
+	}
+	if (!state[SDL_SCANCODE_RIGHT]) {
+		walkingR = false;
+	}
+	if (!state[SDL_SCANCODE_LEFT]) {
+		walkingL = false;
 	}
 	if (state[SDL_SCANCODE_SPACE]) {
 		jump(time);
 	}
+}
+/*This function sets the rectangles that
+will be used for difference frames of character animation*/
+void Player::setRects(SDL_Rect* clip)
+{
+	clip[0] = { 0, 0, 89, 122 }; /*Facing right 1*/
+	clip[1] = { 0, 0, 89, 122 }; /*Facing right 1*/
+	clip[2] = { 0, 0, 89, 122 }; /*Facing right 1*/
+	clip[3] = { 0, 0, 89, 122 }; /*Facing right 1*/
+
+	clip[4] = { 0, 126, 94, 128 }; /*Facing right 2*/
+	clip[5] = { 0, 126, 94, 128 }; /*Facing right 2*/
+	clip[6] = { 0, 126, 94, 128 }; /*Facing right 2*/
+	clip[7] = { 0, 126, 94, 128 }; /*Facing right 2*/
+
+	clip[8] = { 0, 259, 89, 122 }; /*Facing right 3*/
+	clip[9] = { 0, 259, 89, 122 }; /*Facing right 3*/
+	clip[10] = { 0, 259, 89, 122 }; /*Facing right 3*/
+	clip[11] = { 0, 259, 89, 122 }; /*Facing right 3*/
+
+	clip[12] = { 0, 387, 89, 127 }; /*Facing right 4*/
+	clip[13] = { 0, 387, 89, 127 }; /*Facing right 4*/
+	clip[14] = { 0, 387, 89, 127 }; /*Facing right 4*/
+	clip[15] = { 0, 387, 89, 127 }; /*Facing right 4*/
+
+	clip[16] = { 121, 0, 89, 122 }; /*Facing left 1*/
+	clip[17] = { 121, 0, 89, 122 }; /*Facing left 1*/
+	clip[18] = { 121, 0, 89, 122 }; /*Facing left 1*/
+	clip[19] = { 121, 0, 89, 122 }; /*Facing left 1*/
+
+	clip[20] = { 116, 126, 94, 129 }; /*Facing left 2*/
+	clip[21] = { 116, 126, 94, 129 }; /*Facing left 2*/
+	clip[22] = { 116, 126, 94, 129 }; /*Facing left 2*/
+	clip[23] = { 116, 126, 94, 129 }; /*Facing left 2*/
+
+	clip[24] = { 121, 259, 89, 123 }; /*Facing left 3*/
+	clip[25] = { 121, 259, 89, 123 }; /*Facing left 3*/
+	clip[26] = { 121, 259, 89, 123 }; /*Facing left 3*/
+	clip[27] = { 121, 259, 89, 123 }; /*Facing left 3*/
+
+	clip[28] = { 121, 387, 89, 127 }; /*Facing left 4*/
+	clip[29] = { 121, 387, 89, 127 }; /*Facing left 4*/
+	clip[30] = { 121, 387, 89, 127 }; /*Facing left 4*/
+	clip[31] = { 121, 387, 89, 127 }; /*Facing left 4*/
 }
 
 bool Player::check_collision(SDL_Rect A, SDL_Rect B) {

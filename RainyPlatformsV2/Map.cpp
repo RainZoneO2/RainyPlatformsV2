@@ -1,7 +1,7 @@
 #include "Map.h"
 using namespace std;
 
-Map::Map(const Window &window, const string &image_path) : Window(window)
+Map::Map(const Window& window, const string& image_path) : Window(window)
 {
 	Surf_Tileset = IMG_Load(image_path.c_str()); // <----- Can use auto surface here
 	if (!Surf_Tileset)
