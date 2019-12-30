@@ -7,6 +7,7 @@ Right now it's super janky and barebones.
 
 Things to implement:
 - Gravity
+- Collision
 - Jumping
 - ~~AntiGhosting (Keyboard States)~~ (Implemented)
 - ~~Optimized Texture loading~~ (Implemented)
