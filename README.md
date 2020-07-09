@@ -1,16 +1,19 @@
 # RainyPlatformsV2
-University 2nd Semester Game Project. SDL 2.0 and C++, 
+University 2nd Semester Game Project. SDL 2.0 and C++.
 
-This is a University Project I have for my second semester, I chose to make a 2D platformer game, similar to Super Mario
-
+This is a University Project I have for my second semester, I chose to make a 2D platformer game, similar to Super Mario.
 Right now it's super janky and barebones.
 
-Things to implement:
-- Gravity
+## Features
+
+- Map Scrolling
+- Exception Handling
+- .map scanner
+- Optimized Texture loading
+- AntiGhosting
+
+## Features to be implemented
+
+- Basic Physics
 - Collision
 - Jumping
-- ~~AntiGhosting (Keyboard States)~~ (Implemented)
-- ~~Optimized Texture loading~~ (Implemented)
-- ~~.map scanner~~ (Implemented)
-- ~~Exception Handling~~ (Implemented)
-- ~~Map Scrolling~~ (Implemented)
